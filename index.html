@@ -1,0 +1,1018 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pilotez vos agents de code — Formation 2026 pour devs, alternants et solopreneurs</title>
+<meta name="description" content="En 2 h, déléguez une mission complète à un agent de code sans perdre le contrôle. 6 modules, 5 templates de prompts, méthode de pilotage pas à pas. Formation PDF 27 €, pack complet 47 €, pack mentor 97 €.">
+<meta property="og:title" content="Pilotez vos agents de code — la formation">
+<meta property="og:description" content="Vos agents de code écrivent. Vous les pilotez ? En 2 h, apprenez à déléguer une mission complète sans perdre le contrôle.">
+<meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..800;1,9..144,300..800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#faf6f0;            /* crème */
+    --bg-soft:#f4ede2;       /* crème légèrement plus profonde */
+    --surface:#fffdf9;       /* cartes */
+    --ink:#1b1510;           /* noir encre */
+    --ink-2:#40342a;
+    --dim:#7d6f60;           /* texte atténué */
+    --terra:#c2410c;         /* terracotta principal */
+    --terra-deep:#9a3408;
+    --terra-soft:rgba(194,65,12,.10);
+    --terra-line:rgba(194,65,12,.35);
+    --line:#e5dac9;
+    --line-strong:#cdbda6;
+    --code-bg:#1c1512;       /* fond des blocs de code, noir chaud */
+    --code-ink:#f3e9d8;
+    --code-dim:#a2917d;
+    --code-terra:#e8733c;
+    --code-green:#a8bf7e;
+    --serif:'Fraunces',Georgia,'Times New Roman',serif;
+    --mono:'JetBrains Mono',ui-monospace,Menlo,monospace;
+    --sans:-apple-system,'Helvetica Neue',Arial,sans-serif;
+    --maxw:1140px;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto}
+    .reveal{opacity:1 !important;transform:none !important}
+    .cursor{animation:none !important}
+  }
+  body{
+    background:var(--bg);
+    color:var(--ink);
+    font-family:var(--serif);
+    font-size:17.5px;
+    line-height:1.66;
+    -webkit-font-smoothing:antialiased;
+  }
+  body::before{
+    /* filtre chaud : halo terracotta discret en haut à droite */
+    content:"";
+    position:fixed;inset:0;z-index:-1;pointer-events:none;
+    background:radial-gradient(1100px 560px at 82% -10%, rgba(194,65,12,.10), transparent 62%),
+               radial-gradient(900px 500px at -10% 30%, rgba(194,65,12,.05), transparent 60%);
+  }
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 28px}
+  .kicker{
+    font-family:var(--mono);font-size:.72rem;font-weight:500;
+    letter-spacing:.22em;text-transform:uppercase;color:var(--terra);
+  }
+  .kicker::before{content:"❯ ";opacity:.8}
+
+  /* ---------- header ---------- */
+  header{
+    position:sticky;top:0;z-index:50;
+    background:rgba(250,246,240,.88);
+    backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
+  }
+  .nav{display:flex;align-items:center;justify-content:space-between;height:64px}
+  .brand{
+    font-family:var(--serif);font-weight:700;font-size:1.06rem;color:var(--ink);
+    text-decoration:none;letter-spacing:-.01em;
+  }
+  .brand span{color:var(--terra)}
+  .brand::before{
+    content:"❯ ";font-family:var(--mono);font-weight:500;color:var(--terra);
+  }
+  .nav-links{display:flex;gap:28px;align-items:center}
+  .nav-links a{
+    font-family:var(--mono);font-size:.74rem;letter-spacing:.12em;
+    text-transform:uppercase;color:var(--ink-2);text-decoration:none;
+  }
+  .nav-links a:hover{color:var(--terra)}
+  .nav-cta{
+    font-family:var(--mono);font-size:.74rem;letter-spacing:.1em;text-transform:uppercase;
+    color:var(--bg);background:var(--terra);text-decoration:none;
+    padding:9px 16px;border-radius:6px;font-weight:500;
+  }
+  .nav-cta:hover{background:var(--terra-deep)}
+
+  /* ---------- hero ---------- */
+  .hero{padding:84px 0 40px}
+  .hero-grid{display:grid;grid-template-columns:1.28fr .9fr;gap:56px;align-items:center}
+  .hero h1{
+    font-size:clamp(2.6rem,5.4vw,4.15rem);
+    line-height:1.04;font-weight:650;letter-spacing:-.02em;
+    margin:18px 0 22px;
+  }
+  .hero h1 em{
+    font-style:italic;color:var(--terra);
+  }
+  .hero-lead{
+    font-size:1.13rem;line-height:1.62;color:var(--ink-2);
+    max-width:34em;margin-bottom:30px;
+  }
+  .hero-lead strong{color:var(--ink)}
+  .hero-ctas{display:flex;gap:14px;flex-wrap:wrap;align-items:center}
+  .btn{
+    display:inline-block;font-family:var(--mono);font-weight:500;
+    font-size:.82rem;letter-spacing:.08em;text-transform:uppercase;
+    padding:15px 26px;border-radius:7px;text-decoration:none;cursor:pointer;
+    border:1px solid transparent;min-height:44px;line-height:1.2;
+  }
+  .btn-primary{
+    background:var(--terra);color:var(--bg);
+    box-shadow:0 10px 26px -12px rgba(194,65,12,.65);
+  }
+  .btn-primary:hover{background:var(--terra-deep)}
+  .btn-ghost{color:var(--ink);border-color:var(--line-strong);background:transparent}
+  .btn-ghost:hover{border-color:var(--terra);color:var(--terra)}
+  .hero-note{
+    margin-top:20px;font-family:var(--mono);font-size:.72rem;
+    color:var(--dim);letter-spacing:.04em;
+  }
+
+  /* ---------- terminal décoratif ---------- */
+  .terminal{
+    background:var(--code-bg);border-radius:14px;overflow:hidden;
+    border:1px solid rgba(205,189,166,.28);
+    box-shadow:0 30px 70px -30px rgba(27,21,16,.55);
+  }
+  .terminal-bar{
+    display:flex;align-items:center;gap:7px;padding:12px 16px;
+    border-bottom:1px solid rgba(205,189,166,.16);
+  }
+  .dot{width:11px;height:11px;border-radius:50%}
+  .dot-r{background:#d96a4a}.dot-y{background:#d9a04a}.dot-g{background:#7f9c63}
+  .terminal-title{
+    margin-left:10px;font-family:var(--mono);font-size:.68rem;
+    color:var(--code-dim);letter-spacing:.06em;
+  }
+  .terminal-body{padding:20px 22px 24px;font-family:var(--mono);font-size:.8rem;line-height:1.85}
+  .t-prompt{color:var(--code-terra)}
+  .t-cmd{color:var(--code-ink)}
+  .t-out{color:var(--code-dim)}
+  .t-ok{color:var(--code-green)}
+  .t-arrow{color:var(--code-terra)}
+  .t-comment{color:#6b5b4c;font-style:italic}
+  .cursor{
+    display:inline-block;width:8px;height:15px;background:var(--code-terra);
+    vertical-align:-2px;animation:blink 1.1s steps(2) infinite;
+  }
+  @keyframes blink{50%{opacity:0}}
+  .terminal-caption{
+    margin-top:14px;font-family:var(--mono);font-size:.7rem;
+    color:var(--dim);letter-spacing:.05em;
+  }
+
+  /* ---------- bande de chiffres ---------- */
+  .stats{
+    margin-top:64px;border-top:1px solid var(--line);border-bottom:1px solid var(--line);
+  }
+  .stats-grid{display:grid;grid-template-columns:repeat(4,1fr)}
+  .stat{padding:30px 28px;border-left:1px solid var(--line)}
+  .stat:first-child{border-left:none;padding-left:0}
+  .stat b{
+    display:block;font-family:var(--serif);font-weight:650;
+    font-size:clamp(1.9rem,3.4vw,2.7rem);color:var(--terra);line-height:1.05;
+  }
+  .stat span{font-size:.9rem;color:var(--dim);line-height:1.45;display:block;margin-top:8px}
+
+  /* ---------- sections génériques ---------- */
+  section{padding:84px 0}
+  .sec-head{max-width:640px;margin-bottom:52px}
+  .sec-head h2{
+    font-size:clamp(1.9rem,3.6vw,2.7rem);font-weight:650;
+    letter-spacing:-.015em;line-height:1.12;margin-top:14px;
+  }
+  .sec-head h2 em{font-style:italic;color:var(--terra)}
+
+  /* ---------- problème / solution ---------- */
+  .ps-grid{display:grid;grid-template-columns:1fr 1fr;gap:48px}
+  .ps-col h3{
+    font-family:var(--mono);font-size:.74rem;font-weight:500;
+    letter-spacing:.2em;text-transform:uppercase;color:var(--ink-2);
+    padding-bottom:14px;position:relative;margin-bottom:8px;
+  }
+  .ps-col h3::after{
+    content:"";position:absolute;left:0;bottom:0;height:1px;width:100%;
+    background:linear-gradient(90deg,var(--line-strong),transparent);
+  }
+  .ps-col h3.no::after{background:linear-gradient(90deg,#d3a8a0,transparent)}
+  .ps-list{list-style:none}
+  .ps-list li{
+    padding:15px 0 15px 30px;position:relative;border-bottom:1px solid var(--line);
+    font-size:1.01rem;color:var(--ink-2);line-height:1.55;
+  }
+  .ps-list li::before{
+    position:absolute;left:2px;top:14px;font-family:var(--mono);font-weight:700;
+  }
+  .ps-list.no li::before{content:"✕";color:#b0695d;font-size:.85rem}
+  .ps-list.yes li::before{content:"—";color:var(--terra);font-size:1.05rem;top:12px}
+  .ps-list li b{color:var(--ink)}
+  .ps-note{
+    margin-top:20px;font-size:.86rem;color:var(--dim);font-style:italic;
+  }
+
+  /* ---------- modules ---------- */
+  .mod-row{
+    display:grid;grid-template-columns:150px 1fr;gap:40px;
+    padding:34px 0;border-top:1px solid var(--line);align-items:start;
+  }
+  .mod-row:last-child{border-bottom:1px solid var(--line)}
+  .mod-num{
+    font-family:var(--serif);font-weight:750;
+    font-size:clamp(3.4rem,6.5vw,4.9rem);line-height:.95;
+    color:transparent;-webkit-text-stroke:1.6px rgba(194,65,12,.55);
+  }
+  .mod-row:hover .mod-num{
+    color:rgba(194,65,12,.13);
+    -webkit-text-stroke-color:rgba(194,65,12,.85);
+    transition:color .3s,-webkit-text-stroke-color .3s;
+  }
+  .mod-tag{
+    font-family:var(--mono);font-size:.68rem;letter-spacing:.18em;
+    text-transform:uppercase;color:var(--terra);margin-bottom:8px;display:block;
+  }
+  .mod-row h3{font-size:1.5rem;font-weight:650;letter-spacing:-.01em;margin-bottom:10px}
+  .mod-row p{color:var(--ink-2);max-width:56ch;font-size:1rem}
+  .mod-deliv{
+    margin-top:14px;font-family:var(--mono);font-size:.72rem;color:var(--dim);
+  }
+  .mod-deliv b{color:var(--terra);font-weight:500}
+
+  /* ---------- extrait de code ---------- */
+  .code-panel{
+    background:var(--code-bg);border-radius:14px;overflow:hidden;
+    border:1px solid rgba(205,189,166,.25);
+    box-shadow:0 30px 70px -32px rgba(27,21,16,.5);
+  }
+  .code-panel-head{
+    display:flex;align-items:center;justify-content:space-between;
+    padding:14px 20px;border-bottom:1px solid rgba(205,189,166,.16);
+  }
+  .code-panel-head .cp-title{
+    font-family:var(--mono);font-size:.7rem;color:var(--code-dim);letter-spacing:.08em;
+  }
+  .cp-copy{
+    font-family:var(--mono);font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;
+    background:transparent;border:1px solid rgba(205,189,166,.35);color:var(--code-ink);
+    padding:7px 13px;border-radius:5px;cursor:pointer;
+  }
+  .cp-copy:hover{border-color:var(--code-terra);color:var(--code-terra)}
+  .cp-copy.copied{border-color:var(--code-green);color:var(--code-green)}
+  .code-panel pre{
+    padding:26px 30px;overflow-x:auto;
+    font-family:var(--mono);font-size:.8rem;line-height:1.8;color:var(--code-ink);
+  }
+  .code-panel .c-c{color:var(--code-dim)}
+  .code-panel .c-k{color:var(--code-terra);font-weight:500}
+  .code-panel .c-s{color:#d9b27e}
+  .code-panel .c-g{color:var(--code-green)}
+  .code-panel .c-h{color:#c9a0e0}
+  .code-caption{
+    margin-top:16px;font-family:var(--mono);font-size:.7rem;
+    color:var(--dim);letter-spacing:.05em;
+  }
+
+  /* ---------- pour qui ---------- */
+  .who-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+  .who-card{
+    background:var(--surface);border:1px solid var(--line);border-radius:12px;
+    padding:30px 28px;
+  }
+  .who-card .w-tag{
+    font-family:var(--mono);font-size:.68rem;letter-spacing:.18em;
+    text-transform:uppercase;color:var(--terra);display:block;margin-bottom:14px;
+  }
+  .who-card h3{font-size:1.28rem;font-weight:650;margin-bottom:10px}
+  .who-card p{font-size:.95rem;color:var(--ink-2);line-height:1.6}
+  .who-card ul{list-style:none;margin-top:16px}
+  .who-card li{
+    font-size:.9rem;color:var(--ink-2);padding:7px 0 7px 22px;position:relative;
+    border-top:1px solid var(--line);
+  }
+  .who-card li::before{content:"—";position:absolute;left:0;color:var(--terra)}
+
+  /* ---------- offres ---------- */
+  .pricing-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;align-items:stretch}
+  .offer{
+    position:relative;background:var(--surface);border:1px solid var(--line);
+    border-radius:14px;padding:36px 30px;display:flex;flex-direction:column;
+  }
+  .offer.featured{
+    border-color:var(--terra-line);
+    background:linear-gradient(180deg,rgba(194,65,12,.07),var(--surface) 45%);
+    box-shadow:0 26px 60px -30px rgba(194,65,12,.4);
+  }
+  .offer-badge{
+    position:absolute;top:-13px;left:50%;transform:translateX(-50%);
+    background:linear-gradient(135deg,#e8733c,var(--terra));
+    color:var(--bg);font-family:var(--mono);font-size:.66rem;font-weight:500;
+    letter-spacing:.16em;text-transform:uppercase;
+    padding:6px 16px;border-radius:20px;white-space:nowrap;
+  }
+  .offer .o-name{
+    font-family:var(--mono);font-size:.72rem;letter-spacing:.18em;
+    text-transform:uppercase;color:var(--terra);
+  }
+  .offer h3{font-size:1.45rem;font-weight:650;margin:12px 0 6px;letter-spacing:-.01em}
+  .offer .o-desc{font-size:.95rem;color:var(--ink-2);line-height:1.6;flex:1}
+  .offer .o-price{
+    font-family:var(--serif);font-size:2.9rem;font-weight:700;
+    color:var(--ink);margin:20px 0 4px;line-height:1;
+  }
+  .offer .o-price small{font-size:1rem;color:var(--dim);font-weight:400}
+  .offer .o-per{
+    font-family:var(--mono);font-size:.68rem;color:var(--dim);
+    letter-spacing:.08em;margin-bottom:20px;
+  }
+  .offer ul{list-style:none;margin-bottom:26px;flex:1}
+  .offer li{
+    font-size:.9rem;color:var(--ink-2);padding:9px 0 9px 24px;position:relative;
+    border-top:1px solid var(--line);line-height:1.5;
+  }
+  .offer li::before{content:"—";position:absolute;left:0;color:var(--terra)}
+  .offer .btn{text-align:center;width:100%}
+
+  /* ---------- formulaire ---------- */
+  .form-grid{display:grid;grid-template-columns:1fr 1.1fr;gap:52px;align-items:start}
+  .form-side h2{
+    font-size:clamp(1.9rem,3.4vw,2.6rem);font-weight:650;
+    letter-spacing:-.015em;line-height:1.12;margin:14px 0 18px;
+  }
+  .form-side h2 em{font-style:italic;color:var(--terra)}
+  .form-side p{color:var(--ink-2);margin-bottom:14px}
+  .form-steps{list-style:none;margin-top:26px}
+  .form-steps li{
+    display:flex;gap:14px;align-items:baseline;padding:12px 0;
+    border-top:1px solid var(--line);font-size:.95rem;color:var(--ink-2);
+  }
+  .form-steps .n{
+    font-family:var(--mono);font-weight:700;color:var(--terra);font-size:.8rem;
+  }
+  .form-card{
+    background:var(--surface);border:1px solid var(--line);border-radius:14px;
+    padding:34px 32px;
+  }
+  .field{margin-bottom:18px}
+  .field label{
+    display:block;font-family:var(--mono);font-size:.7rem;font-weight:500;
+    letter-spacing:.14em;text-transform:uppercase;color:var(--ink-2);margin-bottom:8px;
+  }
+  .field input,.field select,.field textarea{
+    width:100%;padding:13px 15px;border-radius:7px;
+    border:1px solid var(--line-strong);background:var(--bg-soft);
+    font-family:var(--sans);font-size:.98rem;color:var(--ink);
+    transition:border-color .2s;
+  }
+  .field input:focus,.field select:focus,.field textarea:focus{
+    outline:none;border-color:var(--terra);background:var(--surface);
+  }
+  .field textarea{min-height:110px;resize:vertical}
+  .field select{
+    appearance:none;-webkit-appearance:none;
+    background-image:linear-gradient(45deg,transparent 50%,var(--terra) 50%),
+      linear-gradient(135deg,var(--terra) 50%,transparent 50%);
+    background-position:calc(100% - 20px) 50%,calc(100% - 15px) 50%;
+    background-size:5px 5px;background-repeat:no-repeat;
+    padding-right:40px;
+  }
+  .form-err{
+    display:none;background:#f7e8e4;border:1px solid #ddb3a8;color:#8c2f10;
+    font-size:.86rem;padding:11px 14px;border-radius:7px;margin-bottom:16px;
+  }
+  .form-err.visible{display:block}
+  .form-ok{
+    display:none;background:#edf3e4;border:1px solid #c4d6a8;color:#3f551f;
+    font-size:.92rem;padding:16px 18px;border-radius:7px;margin-bottom:16px;line-height:1.55;
+  }
+  .form-ok.visible{display:block}
+  .form-ok b{display:block;font-size:1.02rem;margin-bottom:4px}
+  .form-secure{
+    margin-top:16px;font-family:var(--mono);font-size:.68rem;
+    color:var(--dim);letter-spacing:.05em;line-height:1.6;
+  }
+
+  /* ---------- FAQ ---------- */
+  .faq-wrap{max-width:760px}
+  details{
+    border-top:1px solid var(--line);padding:20px 4px;
+  }
+  details:last-of-type{border-bottom:1px solid var(--line)}
+  summary{
+    cursor:pointer;font-size:1.06rem;font-weight:600;list-style:none;
+    display:flex;justify-content:space-between;align-items:center;gap:18px;
+    color:var(--ink);
+  }
+  summary::-webkit-details-marker{display:none}
+  summary::after{
+    content:"+";font-family:var(--mono);font-weight:400;color:var(--terra);
+    font-size:1.3rem;transition:transform .25s;flex-shrink:0;
+  }
+  details[open] summary::after{transform:rotate(45deg)}
+  details p{
+    margin-top:14px;color:var(--ink-2);font-size:.97rem;max-width:62ch;line-height:1.65;
+  }
+
+  /* ---------- footer ---------- */
+  footer{
+    border-top:1px solid var(--line);padding:46px 0 60px;
+    background:var(--bg-soft);
+  }
+  .foot-grid{display:flex;justify-content:space-between;gap:30px;flex-wrap:wrap;align-items:flex-start}
+  .foot-brand{font-family:var(--serif);font-weight:700;font-size:1.1rem}
+  .foot-brand span{color:var(--terra)}
+  .foot-meta{
+    font-family:var(--mono);font-size:.7rem;color:var(--dim);
+    letter-spacing:.05em;line-height:2;margin-top:10px;
+  }
+  .foot-links{display:flex;gap:24px}
+  .foot-links a{
+    font-family:var(--mono);font-size:.72rem;letter-spacing:.1em;
+    text-transform:uppercase;color:var(--ink-2);text-decoration:none;
+  }
+  .foot-links a:hover{color:var(--terra)}
+
+  /* ---------- reveal ---------- */
+  .reveal{opacity:0;transform:translateY(20px);transition:opacity .7s ease,transform .7s ease}
+  .reveal.visible{opacity:1;transform:none}
+
+  /* ---------- responsive ---------- */
+  @media (max-width:980px){
+    .hero-grid{grid-template-columns:1fr;gap:40px}
+    .stats-grid{grid-template-columns:repeat(2,1fr)}
+    .stat:nth-child(3){border-left:none;padding-left:0}
+    .ps-grid{grid-template-columns:1fr;gap:36px}
+    .who-grid{grid-template-columns:1fr;gap:18px}
+    .pricing-grid{grid-template-columns:1fr;max-width:480px;margin:0 auto}
+    .offer.featured{order:-1}
+    .form-grid{grid-template-columns:1fr;gap:40px}
+    .mod-row{grid-template-columns:110px 1fr;gap:26px}
+  }
+  @media (max-width:600px){
+    body{font-size:16.5px}
+    .nav-links{display:none}
+    .hero{padding:56px 0 30px}
+    section{padding:62px 0}
+    .stats-grid{grid-template-columns:1fr 1fr}
+    .stat{padding:22px 18px}
+    .mod-row{grid-template-columns:1fr;gap:14px}
+    .form-card{padding:26px 20px}
+    .terminal-body{font-size:.72rem;padding:16px}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap nav">
+    <a class="brand" href="#top">Pilotez vos <span>agents de code</span></a>
+    <nav class="nav-links">
+      <a href="#modules">Modules</a>
+      <a href="#offres">Offres</a>
+      <a href="#faq">FAQ</a>
+    </nav>
+    <a class="nav-cta" href="#commander">Commander</a>
+  </div>
+</header>
+
+<!-- ================= HERO ================= -->
+<section class="hero" id="top">
+  <div class="wrap">
+    <div class="hero-grid">
+      <div>
+        <p class="kicker">Formation 2026&nbsp;· devs, alternants, solopreneurs</p>
+        <h1>Vos agents de code écrivent.<br><em>Vous les pilotez&nbsp;?</em></h1>
+        <p class="hero-lead">Les coding agents ont envahi GitHub&nbsp;: <strong>deepseek-harness (110k★), CodexPlusPlus (28k★)</strong>… Le marché a validé une chose&nbsp;: <strong>rendre les agents de code utilisables</strong>. Mais personne n'enseigne comment les <strong>piloter</strong>.</p>
+        <p class="hero-lead">En <strong>2&nbsp;h</strong>, cette formation vous apprend à déléguer une mission complète à un agent de code — <strong>sans perdre le contrôle</strong> du repo, du budget ni de la qualité.</p>
+        <div class="hero-ctas">
+          <a class="btn btn-primary" href="#offres">Prendre le pack complet — 47&nbsp;€</a>
+          <a class="btn btn-ghost" href="#modules">Voir les 6 modules</a>
+        </div>
+        <p class="hero-note">PDF 27&nbsp;€ · Pack complet 47&nbsp;€ · Mentor 97&nbsp;€ — livraison par email</p>
+      </div>
+      <div>
+        <div class="terminal" aria-hidden="true">
+          <div class="terminal-bar">
+            <span class="dot dot-r"></span><span class="dot dot-y"></span><span class="dot dot-g"></span>
+            <span class="terminal-title">pilote@dev — zsh — mission&nbsp;01</span>
+          </div>
+          <div class="terminal-body">
+            <div><span class="t-prompt">$ </span><span class="t-cmd">agent mission spec/mission-paiement.md</span></div>
+            <div><span class="t-out">→ plan proposé en 4 étapes — <span class="t-ok">approuvé ✓</span></span></div>
+            <div><span class="t-out">→ 12 fichiers modifiés, 3 créés, 0 hors périmètre</span></div>
+            <div><span class="t-out">→ <span class="t-ok">42 tests&nbsp;: 42 passés ✓</span> · lint ✓ · types ✓</span></div>
+            <div><span class="t-out">→ diff prêt&nbsp;: <span class="t-cmd">git diff main</span> (1&nbsp;284 lignes)</span></div>
+            <div><span class="t-prompt">$ </span><span class="t-cmd">vous</span> <span class="t-arrow">→</span> <span class="t-cmd">review terminée — merge ✓</span><span class="cursor"></span></div>
+          </div>
+        </div>
+        <p class="terminal-caption"># une mission pilotée de bout en bout — module 3</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= STATS ================= -->
+<div class="stats">
+  <div class="wrap stats-grid">
+    <div class="stat"><b>2&nbsp;h</b><span>pour déléguer une mission complète à un agent, sans perdre le contrôle</span></div>
+    <div class="stat"><b>6</b><span>modules denses&nbsp;: leçon + exemple réel + exercice</span></div>
+    <div class="stat"><b>5</b><span>templates de prompts prêts à l'emploi</span></div>
+    <div class="stat"><b>1</b><span>méthode de pilotage&nbsp;: choisir, cadrer, missionner, vérifier, sécuriser, orchestrer</span></div>
+  </div>
+</div>
+
+<!-- ================= PROBLÈME / SOLUTION ================= -->
+<section>
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <p class="kicker">Le constat</p>
+      <h2>Vous regardez vos agents écrire à toute vitesse… <em>sans oser leur confier une vraie mission.</em></h2>
+    </div>
+    <div class="ps-grid">
+      <div class="ps-col reveal">
+        <h3 class="no">Ce que font la plupart des devs</h3>
+        <ul class="ps-list no">
+          <li>Des prompts vagues — <b>«&nbsp;améliore ce code&nbsp;»</b> — et des résultats approximatifs</li>
+          <li>Des merges les yeux fermés, sans lire le diff</li>
+          <li>Des tests supprimés ou vidés par l'agent, sans que personne le voie</li>
+          <li>Des agents qui réécrivent toute la codebase «&nbsp;au passage&nbsp;»</li>
+          <li>Des budgets tokens qui explosent sur des missions mal cadrées</li>
+          <li>Plusieurs agents qui se marchent dessus sur le même repo</li>
+        </ul>
+        <p class="ps-note">Résultat&nbsp;: l'agent impressionne au démo, mais la confiance ne vient jamais.</p>
+      </div>
+      <div class="ps-col reveal">
+        <h3>Ce que vous allez faire</h3>
+        <ul class="ps-list yes">
+          <li><b>Cadrer</b> chaque mission dans une fiche de tâche avant d'ouvrir l'agent</li>
+          <li>Missionner avec un <b>prompt en 7 blocs</b> que l'agent comprend du premier coup</li>
+          <li><b>Relire le diff comme un expert</b> et repérer les 7 signatures du code d'agent</li>
+          <li>Imposer le <b>garde-fou tests</b>&nbsp;: test d'abord, code ensuite, CI obligatoire</li>
+          <li>Garder un <b>budget et un périmètre</b> fermes à chaque mission</li>
+          <li><b>Orchestrer plusieurs agents</b> sans conflits ni perte de contrôle</li>
+        </ul>
+        <p class="ps-note">Résultat&nbsp;: vous déléguez l'écriture, vous gardez les décisions.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= MODULES ================= -->
+<section id="modules" style="background:var(--bg-soft);border-top:1px solid var(--line);border-bottom:1px solid var(--line)">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <p class="kicker">Le programme — 6 modules</p>
+      <h2>De la première mission au <em>chef d'orchestre</em></h2>
+      <p style="margin-top:16px;color:var(--ink-2)">Chaque module&nbsp;: une leçon dense, un exemple réel, un exercice à faire en 15-30 minutes.</p>
+    </div>
+
+    <div class="mod-row reveal">
+      <div class="mod-num">01</div>
+      <div>
+        <span class="mod-tag">Choisir</span>
+        <h3>Choisir son agent (et son modèle)</h3>
+        <p>CLI, IDE ou agent autonome&nbsp;: les critères qui comptent vraiment — contrôlabilité, transparence, coût par mission, fenêtre de contexte. Le bon choix selon votre profil (dev en poste, alternant, solopreneur), avec les chiffres réels d'une mission typique.</p>
+        <p class="mod-deliv"><b>Livrables&nbsp;:</b> grille de choix · tableau comparatif · calcul de budget</p>
+      </div>
+    </div>
+
+    <div class="mod-row reveal">
+      <div class="mod-num">02</div>
+      <div>
+        <span class="mod-tag">Cadrer</span>
+        <h3>Setup d'un repo de travail</h3>
+        <p>Le terrain d'atterrissage de chaque mission&nbsp;: un fichier de contexte (<code style="font-family:var(--mono);font-size:.85em">AGENTS.md</code>) que l'agent lit automatiquement, des branches propres, un budget tokens, des permissions de commandes et un environnement reproductible.</p>
+        <p class="mod-deliv"><b>Livrables&nbsp;:</b> modèle d'AGENTS.md · conventions git · garde-fous de budget</p>
+      </div>
+    </div>
+
+    <div class="mod-row reveal">
+      <div class="mod-num">03</div>
+      <div>
+        <span class="mod-tag">Missionner</span>
+        <h3>Le prompt de mission parfait</h3>
+        <p>L'anatomie d'une mission que l'agent comprend du premier coup&nbsp;: rôle, objectif mesurable, périmètre, contraintes, définition de fini, livrables, format. Le pattern spec-first et les 6 erreurs qui coûtent des heures.</p>
+        <p class="mod-deliv"><b>Livrables&nbsp;:</b> template de prompt de mission · fiche de tâche · boucle de feedback</p>
+      </div>
+    </div>
+
+    <div class="mod-row reveal">
+      <div class="mod-num">04</div>
+      <div>
+        <span class="mod-tag">Vérifier</span>
+        <h3>Review des changements</h3>
+        <p>Lire un diff efficacement, repérer les 7 signatures du code d'agent (sur-ingénierie, hallucinations d'API, tests vidés, refactorisations non demandées…), et valider sans merger les yeux fermés. Quand dire non, et comment.</p>
+        <p class="mod-deliv"><b>Livrables&nbsp;:</b> checklist de review · workflow de validation en 5 étapes</p>
+      </div>
+    </div>
+
+    <div class="mod-row reveal">
+      <div class="mod-num">05</div>
+      <div>
+        <span class="mod-tag">Sécuriser</span>
+        <h3>Le garde-fou tests</h3>
+        <p>Les tests comme contrat de délégation&nbsp;: test-first avec l'agent, définition de fini vérifiable, CI comme arbitre, détection des tests creux. Le filet qui transforme l'agent en collaborateur fiable.</p>
+        <p class="mod-deliv"><b>Livrables&nbsp;:</b> contrat de tests à coller dans chaque prompt · hiérarchie du filet</p>
+      </div>
+    </div>
+
+    <div class="mod-row reveal">
+      <div class="mod-num">06</div>
+      <div>
+        <span class="mod-tag">Orchestrer</span>
+        <h3>Monter une équipe d'agents</h3>
+        <p>Quand une mission dépasse une journée&nbsp;: spécialiser les rôles (implémenteur, reviewer, testeur), ordonnancer les fiches de tâches, faire relire les agents entre eux, et arbitrer les conflits avec git comme juge de paix.</p>
+        <p class="mod-deliv"><b>Livrables&nbsp;:</b> graphe de mission · revue croisée · rétrospective d'équipe</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= EXTRAIT DE CODE ================= -->
+<section>
+  <div class="wrap">
+    <div class="sec-head reveal" style="max-width:720px">
+      <p class="kicker">Extrait — module 3</p>
+      <h2>Le prompt de mission qui <em>change tout</em></h2>
+      <p style="margin-top:16px;color:var(--ink-2)">Un extrait réel de la formation&nbsp;: la mission «&nbsp;ajouter le paiement Stripe&nbsp;» rédigée avec les 7 blocs. À copier, à adapter, à utiliser dès ce soir.</p>
+    </div>
+    <div class="code-panel reveal">
+      <div class="code-panel-head">
+        <span class="cp-title">prompt-mission.md — mission&nbsp;PAIEMENT-STRIPE</span>
+        <button class="cp-copy" id="btn-copy" type="button">Copier</button>
+      </div>
+      <pre><span class="c-c"># Mission PAIEMENT-STRIPE — ajouter le paiement par carte</span>
+
+<span class="c-k">Rôle&nbsp;:</span> développeur senior sur le repo <span class="c-s">caissevite</span>. Stack&nbsp;: Node 20, Express, SQLite.
+Tu travailles sur la branche <span class="c-s">feature/paiement-stripe</span> (déjà créée).
+
+<span class="c-k">Objectif (mesurable)&nbsp;:</span> un client peut payer une commande par carte.
+Critère de réussite&nbsp;: le parcours complet (créer la commande → payer → confirmer)
+passe les 5 tests d'intégration du fichier <span class="c-s">tests/paiement.test.js</span>.
+
+<span class="c-k">Périmètre&nbsp;:</span> fichiers autorisés&nbsp;: <span class="c-s">src/paiement/</span>, <span class="c-s">src/routes/</span>,
+<span class="c-s">db/migrations/</span>, <span class="c-s">tests/paiement.test.js</span>. Interdit&nbsp;: toucher à
+<span class="c-s">src/front/</span>, <span class="c-s">package.json</span> (sauf ajout de <span class="c-s">stripe</span>), modifier les tests existants.
+
+<span class="c-k">Contraintes&nbsp;:</span> clé API Stripe lue depuis <span class="c-s">process.env.STRIPE_SECRET_KEY</span>
+(jamais en dur). Erreurs retournées en JSON <span class="c-s">{error: "…"}</span>. Style&nbsp;: async/await.
+
+<span class="c-k">Définition de fini&nbsp;:</span> ✅ 5 tests d'intégration verts · ✅ <span class="c-g">npm run lint</span> ✅
+· ✅ <span class="c-g">npm run typecheck</span> ✅ · ✅ migration SQLite appliquée
+· ✅ aucun test existant modifié · ✅ résumé des changements + risques en fin de mission.
+
+<span class="c-k">Livrables&nbsp;:</span> un commit atomique par étape, messages en
+<span class="c-s">conventional commits</span> (feat/fix/test), puis un diff résumé à relire.
+
+<span class="c-k">Format&nbsp;:</span> réponse finale en français, max 250 mots&nbsp;: ce qui a été fait,
+ce qui n'a pas été fait, les risques restants. Ne pas écrire de code hors mission.</pre>
+    </div>
+    <p class="code-caption"># les 7 blocs&nbsp;: rôle · objectif mesurable · périmètre · contraintes · définition de fini · livrables · format</p>
+  </div>
+</section>
+
+<!-- ================= POUR QUI ================= -->
+<section style="background:var(--bg-soft);border-top:1px solid var(--line);border-bottom:1px solid var(--line)">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <p class="kicker">Pour qui</p>
+      <h2>Trois profils, <em>une même urgence</em>&nbsp;: reprendre la main</h2>
+    </div>
+    <div class="who-grid">
+      <div class="who-card reveal">
+        <span class="w-tag">Dev en poste</span>
+        <h3>Vous devez livrer plus vite</h3>
+        <p>Votre équipe adopte les agents de code, mais personne n'a de méthode. Vous, vous aurez la méthode — et la review.</p>
+        <ul>
+          <li>Déléguer les tâches répétitives sans stress</li>
+          <li>Relire les diffs d'agents comme un senior</li>
+          <li>Imposer le garde-fou tests dans l'équipe</li>
+        </ul>
+      </div>
+      <div class="who-card reveal">
+        <span class="w-tag">Alternant / junior</span>
+        <h3>L'agent est votre accélérateur</h3>
+        <p>Vous avez un an pour prouver votre valeur. Bien piloté, l'agent vous fait gagner des mois — mal piloté, il masque vos lacunes.</p>
+        <ul>
+          <li>Comprendre ce que l'agent écrit, pas seulement l'accepter</li>
+          <li>Structurer vos missions comme un pro</li>
+          <li>Un portfolio de missions réussies, pas de copier-coller</li>
+        </ul>
+      </div>
+      <div class="who-card reveal">
+        <span class="w-tag">Solopreneur tech</span>
+        <h3>Votre équipe, c'est vous + des agents</h3>
+        <p>Chaque heure compte. Un agent bien piloté devient votre premier collaborateur — sans salaire, sans micro-management.</p>
+        <ul>
+          <li>Lancer des missions complètes en parallèle</li>
+          <li>Maîtriser le coût réel par mission</li>
+          <li>Orchestrer 2-3 agents comme une mini-équipe</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= OFFRES ================= -->
+<section id="offres">
+  <div class="wrap">
+    <div class="sec-head reveal" style="margin-left:auto;margin-right:auto;text-align:center">
+      <p class="kicker">Offres — livraison par email</p>
+      <h2>Choisissez votre <em>pack</em></h2>
+      <p style="margin-top:16px;color:var(--ink-2)">Paiement par virement ou message privé. Confirmation et livraison par email sous 24&nbsp;h.</p>
+    </div>
+    <div class="pricing-grid">
+      <div class="offer reveal">
+        <span class="o-name">Formation PDF</span>
+        <h3>La formation</h3>
+        <p class="o-desc">Le manuel complet&nbsp;: 6 modules rédigés en profondeur, exemples réels, exercices, checklist finale et glossaire.</p>
+        <div class="o-price">27&nbsp;€</div>
+        <p class="o-per">paiement unique · PDF ≈ 30 pages</p>
+        <ul>
+          <li>Formation complète (6 modules)</li>
+          <li>Exemple réel + exercice par module</li>
+          <li>Checklist finale & glossaire</li>
+        </ul>
+        <button class="btn btn-ghost" type="button" onclick="choisirOffre('La formation — 27 €')">Commander la formation</button>
+      </div>
+
+      <div class="offer featured reveal">
+        <span class="offer-badge">Le plus choisi</span>
+        <span class="o-name">Pack complet</span>
+        <h3>Formation + templates</h3>
+        <p class="o-desc">La formation, plus les 5 templates de prompts prêts à l'emploi — le kit qui vous fait gagner des heures dès la première mission.</p>
+        <div class="o-price">47&nbsp;€</div>
+        <p class="o-per">paiement unique · tout le nécessaire</p>
+        <ul>
+          <li>Formation complète (6 modules)</li>
+          <li>5 templates de prompts (.md)</li>
+          <li>Prompt de mission · fiche de tâche</li>
+          <li>Checklist de review · contrat de tests · rétro</li>
+          <li>Mises à jour de la formation offertes</li>
+        </ul>
+        <button class="btn btn-primary" type="button" onclick="choisirOffre('Pack complet — 47 €')">Commander le pack complet</button>
+      </div>
+
+      <div class="offer reveal">
+        <span class="o-name">Pack Mentor</span>
+        <h3>Formation + session</h3>
+        <p class="o-desc">Le pack complet, plus une session individuelle d'1&nbsp;h avec le formateur pour piloter votre première vraie mission ensemble.</p>
+        <div class="o-price">97&nbsp;€</div>
+        <p class="o-per">paiement unique · session réservée par email</p>
+        <ul>
+          <li>Tout le pack complet (47&nbsp;€)</li>
+          <li>Session individuelle d'1&nbsp;h (visio)</li>
+          <li>Revue de votre setup & de vos prompts</li>
+          <li>Replay et notes de session</li>
+        </ul>
+        <button class="btn btn-ghost" type="button" onclick="choisirOffre('Pack Mentor — 97 €')">Commander le pack mentor</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= COMMANDER ================= -->
+<section id="commander" style="background:var(--bg-soft);border-top:1px solid var(--line);border-bottom:1px solid var(--line)">
+  <div class="wrap">
+    <div class="form-grid">
+      <div class="form-side reveal">
+        <p class="kicker">Commander</p>
+        <h2>Passez commande, <em>recevez la formation</em> par email</h2>
+        <p>Trois étapes, aucune friction. Vous recevez un email de confirmation immédiat, puis vos livrables sous 24&nbsp;h.</p>
+        <ul class="form-steps">
+          <li><span class="n">01</span><span>Remplissez le formulaire et choisissez votre offre.</span></li>
+          <li><span class="n">02</span><span>Vous recevez la confirmation par email avec les instructions de paiement (virement ou message privé).</span></li>
+          <li><span class="n">03</span><span>Dès réception du paiement, la formation (et les templates) arrive dans votre boîte mail.</span></li>
+        </ul>
+      </div>
+      <div class="form-card reveal">
+        <div class="form-ok" id="ok">
+          <b>Commande envoyée&nbsp;! 🎉</b>
+          Merci — vous allez recevoir un email de confirmation avec les instructions de paiement. Si vous ne voyez rien d'ici quelques minutes, vérifiez vos spams.
+        </div>
+        <div class="form-err" id="err"></div>
+        <form id="order-form" onsubmit="return commander(event)" novalidate>
+          <div class="field">
+            <label for="name">Votre nom</label>
+            <input type="text" id="name" name="name" placeholder="Camille Dupont" required>
+          </div>
+          <div class="field">
+            <label for="email">Votre email</label>
+            <input type="email" id="email" name="email" placeholder="camille@exemple.fr" required>
+          </div>
+          <div class="field">
+            <label for="offre">Offre choisie</label>
+            <select id="offre" name="offre" required>
+              <option value="La formation — 27 €">La formation — 27 €</option>
+              <option value="Pack complet — 47 €" selected>Pack complet — 47 € (le plus choisi)</option>
+              <option value="Pack Mentor — 97 €">Pack Mentor — 97 €</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="question">Votre contexte (facultatif)</label>
+            <textarea id="question" name="question" placeholder="Votre stack, vos outils, votre objectif… Ex. : solopreneur, stack Next.js, je veux déléguer mes tâches répétitives."></textarea>
+          </div>
+          <button class="btn btn-primary" type="submit" id="btn-send" style="width:100%;text-align:center">Envoyer ma commande</button>
+          <p class="form-secure">🔒 Confirmation par email — paiement par virement ou message privé<br>Livraison des PDF sous 24&nbsp;h après paiement</p>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= FAQ ================= -->
+<section id="faq">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <p class="kicker">FAQ</p>
+      <h2>Questions <em>fréquentes</em></h2>
+    </div>
+    <div class="faq-wrap reveal">
+      <details>
+        <summary>Faut-il savoir coder pour suivre la formation&nbsp;?</summary>
+        <p>Oui, un minimum — c'est une formation pour développeurs, alternants et solopreneurs techniques. Pas besoin d'être senior&nbsp;: savoir lire du code, lancer des commandes et comprendre ce qu'est un test suffit. Le module 2 part de zéro sur le setup.</p>
+      </details>
+      <details>
+        <summary>Quel agent faut-il choisir&nbsp;?</summary>
+        <p>La formation est volontairement outil-agnostique&nbsp;: le module 1 vous donne la grille de choix (contrôlabilité, transparence, coût, contexte) et un tableau comparatif des familles d'agents — CLI, IDE, agents autonomes. Vous repartez avec le bon choix pour VOTRE profil, pas pour la hype.</p>
+      </details>
+      <details>
+        <summary>Combien de temps pour en voir les effets&nbsp;?</summary>
+        <p>La promesse&nbsp;: en 2&nbsp;h, vous déléguez une mission complète à un agent sans perdre le contrôle. Les modules 1 à 3 se suivent en une soirée&nbsp;; les modules 4 à 6 se pratiquent sur vos vraies missions de la semaine.</p>
+      </details>
+      <details>
+        <summary>Je n'ai encore jamais utilisé d'agent de code. C'est un problème&nbsp;?</summary>
+        <p>Non — c'est même un avantage&nbsp;: vous n'aurez pas à désapprendre les mauvais réflexes. Le module 1 compare les options sans présupposé, et chaque exercice se fait sur un repo d'entraînement simple.</p>
+      </details>
+      <details>
+        <summary>Comment se passe la livraison&nbsp;?</summary>
+        <p>Vous passez commande via le formulaire, vous recevez un email de confirmation avec les instructions de paiement (virement ou message privé). Dès réception du paiement, vous recevez la formation en PDF et, selon l'offre, les 5 templates de prompts. Comptez moins de 24&nbsp;h.</p>
+      </details>
+      <details>
+        <summary>Comment se déroule la session du Pack Mentor&nbsp;?</summary>
+        <p>Après votre commande, nous réservons ensemble un créneau d'1&nbsp;h en visio. Vous m'apportez votre setup et une mission réelle&nbsp;: nous la cadrons, nous rédigeons le prompt ensemble, puis nous faisons le retour à chaud sur les résultats. Session enregistrée, replay inclus.</p>
+      </details>
+      <details>
+        <summary>Et si la formation ne me convient pas&nbsp;?</summary>
+        <p>Écrivez-moi sous 14 jours après réception&nbsp;: je rembourse intégralement, sans justification à fournir. Les templates restent à vous.</p>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- ================= FOOTER ================= -->
+<footer>
+  <div class="wrap foot-grid">
+    <div>
+      <div class="foot-brand">Pilotez vos <span>agents de code</span></div>
+      <p class="foot-meta">formation 2026 · devs · alternants · solopreneurs<br>PDF 27&nbsp;€ · Pack complet 47&nbsp;€ · Mentor 97&nbsp;€</p>
+    </div>
+    <nav class="foot-links">
+      <a href="#modules">Modules</a>
+      <a href="#offres">Offres</a>
+      <a href="#commander">Commander</a>
+      <a href="#faq">FAQ</a>
+    </nav>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<script>
+(function () {
+  'use strict';
+
+  /* ---------- EmailJS ---------- */
+  var EMAILJS_SERVICE = 'service_cy1ytdb';
+  var EMAILJS_TEMPLATE = 'template_xpo58cv';
+  var EMAILJS_PUBLIC_KEY = '8Pui4ZEqxW2jRVF7h';
+
+  function chargerEmailJS(callback) {
+    if (window.emailjs) { initEmailJS(); callback(); return; }
+    var s = document.createElement('script');
+    s.src = 'https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js';
+    s.onload = function () { initEmailJS(); callback(); };
+    s.onerror = function () { callback(); };
+    document.head.appendChild(s);
+  }
+  function initEmailJS() {
+    if (window.emailjs && !window.__emailjsInit) {
+      window.emailjs.init({ publicKey: EMAILJS_PUBLIC_KEY });
+      window.__emailjsInit = true;
+    }
+  }
+
+  /* ---------- choisir une offre ---------- */
+  window.choisirOffre = function (offre) {
+    var sel = document.getElementById('offre');
+    if (sel) {
+      for (var i = 0; i < sel.options.length; i++) {
+        if (sel.options[i].value === offre) { sel.selectedIndex = i; break; }
+      }
+    }
+    var target = document.getElementById('commander');
+    if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  };
+
+  /* ---------- commander ---------- */
+  window.commander = function (event) {
+    if (event && event.preventDefault) event.preventDefault();
+    var nom = document.getElementById('name');
+    var email = document.getElementById('email');
+    var offre = document.getElementById('offre');
+    var question = document.getElementById('question');
+    var err = document.getElementById('err');
+    var ok = document.getElementById('ok');
+    var btn = document.getElementById('btn-send');
+
+    err.classList.remove('visible');
+    ok.classList.remove('visible');
+
+    var nameVal = (nom.value || '').trim();
+    var emailVal = (email.value || '').trim();
+    if (!nameVal) { afficherErreur(err, 'Merci d\u2019indiquer votre nom.'); nom.focus(); return false; }
+    if (!emailVal || emailVal.indexOf('@') < 1 || emailVal.indexOf('.') < emailVal.indexOf('@') + 2) {
+      afficherErreur(err, 'Merci d\u2019indiquer un email valide (ex. : camille@exemple.fr).');
+      email.focus(); return false;
+    }
+    if (!offre.value) { afficherErreur(err, 'Merci de choisir une offre.'); offre.focus(); return false; }
+
+    var payload = {
+      site: 'Pilotez vos agents de code',
+      name: nameVal,
+      email: emailVal,
+      question: 'Commande : ' + offre.value + (question && question.value.trim() ? ' — Contexte : ' + question.value.trim() : '')
+    };
+
+    btn.disabled = true;
+    btn.textContent = 'Envoi en cours…';
+
+    chargerEmailJS(function () {
+      if (!window.emailjs) {
+        btn.disabled = false; btn.textContent = 'Envoyer ma commande';
+        afficherErreur(err, 'Le service de messagerie est momentanément indisponible. Réessayez dans quelques instants.');
+        return;
+      }
+      window.emailjs.send(EMAILJS_SERVICE, EMAILJS_TEMPLATE, payload)
+        .then(function () {
+          ok.classList.add('visible');
+          document.getElementById('order-form').reset();
+          btn.disabled = false; btn.textContent = 'Envoyer ma commande';
+          if (typeof window.__emailjsLastPayload !== 'undefined') { window.__emailjsLastPayload = payload; }
+        })
+        .catch(function (e) {
+          btn.disabled = false; btn.textContent = 'Envoyer ma commande';
+          afficherErreur(err, 'Erreur lors de l\u2019envoi : ' + ((e && e.text) ? e.text : 'réessayez dans un instant.'));
+        });
+    });
+    return false;
+  };
+
+  function afficherErreur(el, msg) {
+    el.textContent = msg;
+    el.classList.add('visible');
+  }
+
+  /* ---------- copier le prompt ---------- */
+  var btnCopy = document.getElementById('btn-copy');
+  if (btnCopy) {
+    btnCopy.addEventListener('click', function () {
+      var pre = btnCopy.closest('.code-panel').querySelector('pre');
+      var texte = pre.innerText;
+      function done() {
+        btnCopy.textContent = 'Copié ✓';
+        btnCopy.classList.add('copied');
+        setTimeout(function () { btnCopy.textContent = 'Copier'; btnCopy.classList.remove('copied'); }, 2000);
+      }
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(texte).then(done, function () { fallbackCopie(texte, done); });
+      } else { fallbackCopie(texte, done); }
+    });
+  }
+  function fallbackCopie(texte, done) {
+    var ta = document.createElement('textarea');
+    ta.value = texte; ta.style.position = 'fixed'; ta.style.opacity = '0';
+    document.body.appendChild(ta); ta.select();
+    try { document.execCommand('copy'); done(); } catch (e) {}
+    document.body.removeChild(ta);
+  }
+
+  /* ---------- reveal au scroll ---------- */
+  var reveals = document.querySelectorAll('.reveal');
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        if (en.isIntersecting) { en.target.classList.add('visible'); io.unobserve(en.target); }
+      });
+    }, { threshold: 0.08 });
+    reveals.forEach(function (el) { io.observe(el); });
+  } else {
+    reveals.forEach(function (el) { el.classList.add('visible'); });
+  }
+
+  /* ---------- année du footer ---------- */
+  var annee = document.querySelectorAll('.foot-meta');
+  annee.forEach(function (el) {
+    el.innerHTML = el.innerHTML.replace('2026', new Date().getFullYear());
+  });
+})();
+</script>
+</body>
+</html>
