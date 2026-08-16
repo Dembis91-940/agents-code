@@ -23,6 +23,8 @@
     --terra-deep:#9a3408;
     --terra-soft:rgba(194,65,12,.10);
     --terra-line:rgba(194,65,12,.35);
+    --accent:#8a9a5b;
+    --grad-cta:linear-gradient(135deg,#c2410c 0%,#9a3408 100%);
     --line:#e5dac9;
     --line-strong:#cdbda6;
     --code-bg:#1c1512;       /* fond des blocs de code, noir chaud */
@@ -117,10 +119,10 @@
     border:1px solid transparent;min-height:44px;line-height:1.2;
   }
   .btn-primary{
-    background:var(--terra);color:var(--bg);
-    box-shadow:0 10px 26px -12px rgba(194,65,12,.65);
+    background:var(--grad-cta);color:var(--bg);
+    box-shadow:0 10px 26px -12px rgba(194,65,12,.7);
   }
-  .btn-primary:hover{background:var(--terra-deep)}
+  .btn-primary:hover{filter:brightness(1.12);box-shadow:0 14px 30px -12px rgba(194,65,12,.8)}
   .btn-ghost{color:var(--ink);border-color:var(--line-strong);background:transparent}
   .btn-ghost:hover{border-color:var(--terra);color:var(--terra)}
   .hero-note{
@@ -480,13 +482,13 @@
       <div>
         <p class="kicker">Formation 2026&nbsp;· devs, alternants, solopreneurs</p>
         <h1>Vos agents de code écrivent.<br><em>Vous les pilotez&nbsp;?</em></h1>
-        <p class="hero-lead">Les coding agents ont envahi GitHub&nbsp;: <strong>deepseek-harness (110k★), CodexPlusPlus (28k★)</strong>… Le marché a validé une chose&nbsp;: <strong>rendre les agents de code utilisables</strong>. Mais personne n'enseigne comment les <strong>piloter</strong>.</p>
-        <p class="hero-lead">En <strong>2&nbsp;h</strong>, cette formation vous apprend à déléguer une mission complète à un agent de code — <strong>sans perdre le contrôle</strong> du repo, du budget ni de la qualité.</p>
+        <p class="hero-lead">Les coding agents ont envahi GitHub&nbsp;: <strong>deepseek-harness (110k★), CodexPlusPlus (28k★)</strong>… Le marché a validé une chose&nbsp;: <strong>ils savent écrire du code</strong>. Ce que personne n'enseigne, c'est les <strong>piloter sans perdre le contrôle</strong>.</p>
+        <p class="hero-lead">En <strong>2&nbsp;h</strong>, cette formation vous apprend à déléguer une mission complète à un agent de code — <strong>repo maîtrisé, budget maîtrisé, qualité vérifiée</strong>. L'agent écrit, vous gardez les décisions.</p>
         <div class="hero-ctas">
           <a class="btn btn-primary" href="#offres">Prendre le pack complet — 47&nbsp;€</a>
           <a class="btn btn-ghost" href="#modules">Voir les 6 modules</a>
         </div>
-        <p class="hero-note">PDF 27&nbsp;€ · Pack complet 47&nbsp;€ · Mentor 97&nbsp;€ — livraison par email</p>
+        <p class="hero-note">PDF 27&nbsp;€ · Pack complet 47&nbsp;€ · Mentor 97&nbsp;€ — livraison par email · <a href="outil.html" style="text-decoration:underline;color:var(--terra)">Quel agent choisir&nbsp;? Testez en 1 min →</a></p>
       </div>
       <div>
         <div class="terminal" aria-hidden="true">
@@ -530,14 +532,14 @@
       <div class="ps-col reveal">
         <h3 class="no">Ce que font la plupart des devs</h3>
         <ul class="ps-list no">
-          <li>Des prompts vagues — <b>«&nbsp;améliore ce code&nbsp;»</b> — et des résultats approximatifs</li>
-          <li>Des merges les yeux fermés, sans lire le diff</li>
+          <li>Des prompts vagues — <b>«&nbsp;améliore ce code&nbsp;»</b> — et des résultats approximatifs qu'il faut corriger soi-même</li>
+          <li>Des merges les yeux fermés, sans lire le diff — et des régressions qui sortent en prod</li>
           <li>Des tests supprimés ou vidés par l'agent, sans que personne le voie</li>
-          <li>Des agents qui réécrivent toute la codebase «&nbsp;au passage&nbsp;»</li>
+          <li>Des agents qui réécrivent toute la codebase «&nbsp;au passage&nbsp;» — et cassent ce qui marchait</li>
           <li>Des budgets tokens qui explosent sur des missions mal cadrées</li>
           <li>Plusieurs agents qui se marchent dessus sur le même repo</li>
         </ul>
-        <p class="ps-note">Résultat&nbsp;: l'agent impressionne au démo, mais la confiance ne vient jamais.</p>
+        <p class="ps-note">Résultat&nbsp;: l'agent impressionne au démo, mais la confiance ne vient jamais — et le code, lui, se dégrade en silence.</p>
       </div>
       <div class="ps-col reveal">
         <h3>Ce que vous allez faire</h3>

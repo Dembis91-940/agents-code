@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quel agent de code pour votre mission ? — Test en 1 minute · Agents Code</title>
+<meta name="description" content="4 questions, 1 minute : découvrez quel agent de code (Claude Code, Cursor, Codex CLI, OpenCode) correspond à votre projet, votre niveau et vos contraintes.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..800;1,9..144,300..800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#faf6f0; --bg-soft:#f4ede2; --surface:#fffdf9;
+    --ink:#1b1510; --ink-2:#40342a; --dim:#7d6f60;
+    --terra:#c2410c; --terra-deep:#9a3408; --terra-soft:rgba(194,65,12,.10); --terra-line:rgba(194,65,12,.35);
+    --accent:#8a9a5b; --line:#e5dac9; --line-strong:#cdbda6;
+    --code-bg:#1c1512; --code-ink:#f3e9d8; --code-dim:#a2917d; --code-green:#a8bf7e;
+    --grad-cta:linear-gradient(135deg,#c2410c 0%,#9a3408 100%);
+    --serif:'Fraunces',Georgia,'Times New Roman',serif;
+    --mono:'JetBrains Mono',ui-monospace,Menlo,monospace;
+    --sans:-apple-system,'Helvetica Neue',Arial,sans-serif;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{background:var(--bg);color:var(--ink);font-family:var(--sans);line-height:1.6;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:840px;margin:0 auto;padding:0 22px}
+  header{display:flex;align-items:center;gap:14px;padding:24px 0;border-bottom:1px solid var(--line)}
+  .mono{font-family:var(--mono)}
+  .logo{font-family:var(--mono);font-weight:700;font-size:16px;color:var(--ink)}
+  .logo b{color:var(--terra)}
+  header a.retour{margin-left:auto;color:var(--terra);text-decoration:none;font-weight:700;font-size:14px;font-family:var(--mono)}
+  header a.retour:hover{color:var(--terra-deep)}
+  .kicker{margin-top:52px;font-family:var(--mono);font-size:12.5px;font-weight:500;letter-spacing:.14em;color:var(--terra)}
+  .kicker::before{content:"$ test --agent-chooser";color:var(--code-dim)}
+  h1{font-family:var(--serif);font-weight:600;font-size:clamp(28px,3.8vw,40px);line-height:1.16;letter-spacing:-.02em;margin:14px 0 12px}
+  h1 em{font-style:italic;color:var(--terra)}
+  .intro{color:var(--ink-2);font-size:16.5px;max-width:640px}
+  .intro strong{color:var(--ink)}
+  .card{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:34px 36px;margin-top:32px;box-shadow:0 12px 36px rgba(27,21,16,.06)}
+  .q{display:none}
+  .q.active{display:block;animation:apparaitre .3s ease}
+  @keyframes apparaitre{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+  .q-num{font-family:var(--mono);font-size:12px;letter-spacing:.14em;color:var(--terra)}
+  .q h2{font-family:var(--serif);font-weight:600;font-size:23px;margin:10px 0 20px;line-height:1.3}
+  .opt{display:flex;gap:14px;align-items:flex-start;width:100%;text-align:left;background:var(--bg);border:1.5px solid var(--line);border-radius:12px;padding:15px 18px;margin-bottom:11px;cursor:pointer;color:var(--ink);font-family:var(--sans);font-size:15px;transition:all .18s}
+  .opt:hover{border-color:var(--terra);background:var(--terra-soft)}
+  .opt.sel{border-color:var(--terra);background:var(--terra-soft);box-shadow:0 0 0 3px rgba(194,65,12,.12)}
+  .opt .ico{font-size:19px;line-height:1.4}
+  .opt b{display:block;font-weight:700}
+  .opt span{color:var(--dim);font-size:13.5px}
+  .nav{display:flex;justify-content:space-between;align-items:center;margin-top:24px}
+  .back{background:none;border:none;color:var(--dim);font-size:14px;cursor:pointer;font-family:var(--mono)}
+  .back:hover{color:var(--ink)}
+  .btn{display:inline-block;background:var(--grad-cta);color:var(--bg);text-decoration:none;font-weight:700;font-family:var(--mono);padding:13px 28px;border-radius:10px;font-size:14.5px;border:none;cursor:pointer;transition:transform .2s,filter .2s;box-shadow:0 10px 24px -12px rgba(194,65,12,.7)}
+  .btn:hover{transform:translateY(-2px);filter:brightness(1.1)}
+  .btn:disabled{opacity:.4;cursor:not-allowed}
+  .resultat{display:none;margin-top:34px}
+  .resultat.visible{display:block;animation:apparaitre .35s ease}
+  .res-card{background:var(--code-bg);border-radius:16px;padding:30px 32px;color:var(--code-ink);font-family:var(--mono)}
+  .res-card .prompt-line{color:var(--code-dim);font-size:13px}
+  .res-card .prompt-line .c{color:var(--terra)}
+  .res-card h2{font-size:clamp(22px,3vw,28px);font-weight:700;margin:12px 0 4px;color:var(--code-green)}
+  .res-card .tagline{color:var(--code-ink);font-size:14.5px;line-height:1.65;margin-bottom:16px}
+  .res-card .tagline strong{color:#fff}
+  .res-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;border-top:1px solid rgba(243,233,216,.15);padding-top:18px}
+  .res-grid .bloc h3{font-size:11.5px;letter-spacing:.12em;color:var(--code-dim);text-transform:uppercase;margin-bottom:6px}
+  .res-grid .bloc p{font-size:13.5px;line-height:1.6;color:var(--code-ink)}
+  .runner{margin-top:16px;font-family:var(--mono);font-size:13px;color:var(--code-dim)}
+  .runner b{color:var(--code-green)}
+  .cta{margin-top:24px;display:flex;gap:14px;flex-wrap:wrap;align-items:center}
+  .btn-ghost{background:transparent;border:1.5px solid var(--line-strong);color:var(--ink);box-shadow:none}
+  .btn-ghost:hover{border-color:var(--terra);color:var(--terra)}
+  .relancer{margin-top:20px;text-align:center}
+  .relancer button{background:none;border:none;color:var(--dim);text-decoration:underline;cursor:pointer;font-size:13.5px;font-family:var(--mono)}
+  .relancer button:hover{color:var(--ink)}
+  footer{margin-top:64px;padding:26px 0 40px;border-top:1px solid var(--line);color:var(--dim);font-size:13px;text-align:center;font-family:var(--mono)}
+  footer a{color:var(--terra);text-decoration:none}
+  @media(max-width:560px){.card{padding:26px 20px}.res-grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="logo">dev<b>@</b>pilote — agents de code</div>
+    <a class="retour" href="index.html">← cd ~/accueil</a>
+  </header>
+
+  <div class="kicker"></div>
+  <h1>Quel agent de code <em>pour votre mission ?</em></h1>
+  <p class="intro">Claude Code, Cursor, Codex CLI, OpenCode : chacun excelle sur un terrain. 4 questions, 1 minute — <strong>le bon agent pour votre projet, votre niveau et vos contraintes</strong>.</p>
+
+  <div class="card">
+    <div class="q active" data-q="0">
+      <div class="q-num">question 1/4</div>
+      <h2>Votre projet, c'est surtout&nbsp;?</h2>
+      <button class="opt" data-opt="web"><span class="ico">🌐</span><span><b>App web / SaaS / site</b><span>Interface, backend, base de données.</span></span></button>
+      <button class="opt" data-opt="scripts"><span class="ico">🧰</span><span><b>Scripts &amp; outils internes</b><span>Automatisations, parsers, petits utilitaires.</span></span></button>
+      <button class="opt" data-opt="legacy"><span class="ico">🏚️</span><span><b>Refactorer un code existant</b><span>Ancienne codebase, dette technique.</span></span></button>
+      <button class="opt" data-opt="explo"><span class="ico">🧪</span><span><b>Explorer / prototyper vite</b><span>Tests d'idées, one-shots, preuves de concept.</span></span></button>
+    </div>
+    <div class="q" data-q="1">
+      <div class="q-num">question 2/4</div>
+      <h2>Votre niveau avec la CLI&nbsp;?</h2>
+      <button class="opt" data-opt="debutant"><span class="ico">🌱</span><span><b>Débutant</b><span>Je préfère rester dans mon éditeur.</span></span></button>
+      <button class="opt" data-opt="confirme"><span class="ico">👍</span><span><b>Confirmé</b><span>Terminal et git, je maîtrise.</span></span></button>
+      <button class="opt" data-opt="expert"><span class="ico">🐧</span><span><b>Expert</b><span>Je vis dans le terminal.</span></span></button>
+    </div>
+    <div class="q" data-q="2">
+      <div class="q-num">question 3/4</div>
+      <h2>Votre contrainte principale&nbsp;?</h2>
+      <button class="opt" data-opt="confid"><span class="ico">🔒</span><span><b>Confidentialité totale</b><span>Le code ne doit pas quitter ma machine.</span></span></button>
+      <button class="opt" data-opt="budget"><span class="ico">💶</span><span><b>Budget serré</b><span>Le plus efficace possible en gratuit.</span></span></button>
+      <button class="opt" data-opt="vitesse"><span class="ico">⚡</span><span><b>Productivité maximale</b><span>Je paie pour gagner du temps.</span></span></button>
+    </div>
+    <div class="q" data-q="3">
+      <div class="q-num">question 4/4</div>
+      <h2>Votre façon de travailler&nbsp;?</h2>
+      <button class="opt" data-opt="ide"><span class="ico">🖥️</span><span><b>Dans mon IDE</b><span>L'agent collabore avec moi en direct.</span></span></button>
+      <button class="opt" data-opt="cli"><span class="ico">⌨️</span><span><b>En terminal</b><span>Je lance des missions, je review.</span></span></button>
+      <button class="opt" data-opt="autonome"><span class="ico">🤖</span><span><b>En autonomie</b><span>L'agent travaille seul, je valide après.</span></span></button>
+    </div>
+    <div class="nav">
+      <button class="back" id="back" style="visibility:hidden">← précédent</button>
+      <button class="btn" id="next" disabled>continuer →</button>
+    </div>
+  </div>
+
+  <div class="resultat" id="resultat">
+    <div class="res-card">
+      <div class="prompt-line"><span class="c">$</span> agent --recommander --pour-ma-mission</div>
+      <h2 id="res-agent">—</h2>
+      <p class="tagline" id="res-tagline"></p>
+      <div class="res-grid">
+        <div class="bloc"><h3>Pourquoi lui</h3><p id="res-pourquoi"></p></div>
+        <div class="bloc"><h3>Conseil de pilotage</h3><p id="res-pilotage"></p></div>
+      </div>
+      <p class="runner" id="res-runner"></p>
+    </div>
+    <div class="cta">
+      <a class="btn" href="index.html#offres">Apprendre à le piloter — pack complet 47&nbsp;€ →</a>
+      <a class="btn btn-ghost" href="index.html#modules">Voir les 6 modules</a>
+    </div>
+    <div class="relancer"><button id="relancer">↺ refaire le test</button></div>
+  </div>
+
+  <footer>agents-code — piloter ses agents de code, pas les subir · <a href="index.html">retour à l'accueil</a></footer>
+</div>
+
+<script>
+(function(){
+  var reponses = {};
+  var idx = 0;
+  var questions = document.querySelectorAll('.q');
+  var next = document.getElementById('next');
+  var back = document.getElementById('back');
+  document.querySelectorAll('.opt').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var q = btn.closest('.q');
+      q.querySelectorAll('.opt').forEach(function(o){o.classList.remove('sel')});
+      btn.classList.add('sel');
+      reponses[q.dataset.q] = btn.dataset.opt;
+      next.disabled = false;
+    });
+  });
+  function afficher(i){
+    questions.forEach(function(q, k){ q.classList.toggle('active', k === i); });
+    idx = i;
+    next.disabled = !reponses[i];
+    next.textContent = i === 3 ? 'voir mon résultat →' : 'continuer →';
+    back.style.visibility = i === 0 ? 'hidden' : 'visible';
+  }
+  next.addEventListener('click', function(){ if(idx < 3){ afficher(idx+1); } else { resultat(); } });
+  back.addEventListener('click', function(){ if(idx > 0) afficher(idx-1); });
+  document.getElementById('relancer').addEventListener('click', function(){
+    reponses = {}; idx = 0;
+    document.querySelectorAll('.opt').forEach(function(o){o.classList.remove('sel')});
+    document.getElementById('resultat').classList.remove('visible');
+    document.querySelector('.card').style.display = '';
+    afficher(0);
+    window.scrollTo({top:0, behavior:'smooth'});
+  });
+
+  var profils = {
+    claude: {
+      nom:'Claude Code', runner:'Aussi pertinent : Cursor (si vous vivez dans l\'IDE).',
+      tagline:'Le choix le plus équilibré : <strong>autonome, transparent, bon sur le legacy comme sur le web</strong>. Il lit le repo, propose un plan, et exécute mission par mission.',
+      pourquoi:'Il excelle quand il faut comprendre une codebase existante avant de la toucher, et son mode plan/approbation en fait le plus sûr pour les missions qui touchent plusieurs fichiers.',
+      pilotage:'Donnez-lui une fiche de mission (objectif mesurable, périmètre, définition de fini), exigez un plan avant le code, et relisez chaque diff avant merge.'
+    },
+    cursor: {
+      nom:'Cursor', runner:'Aussi pertinent : Claude Code (si vous voulez plus d\'autonomie).',
+      tagline:'Le compagnon d\'IDE : <strong>tab, complétion et agent intégré à votre éditeur</strong>. Parfait si vous voulez garder la main pendant que l\'agent écrit.',
+      pourquoi:'Le moins de friction pour démarrer : pas de CLI à apprivoiser, l\'agent travaille dans vos fichiers, avec votre contexte. Idéal en débutant ou en dev web.',
+      pilotage:'Définissez le périmètre dans un fichier de contexte (AGENTS.md), interdisez les modifications hors mission, et activez la revue de diff intégrée avant chaque acceptation.'
+    },
+    codex: {
+      nom:'Codex CLI', runner:'Aussi pertinent : OpenCode (si vous voulez du 100 % open source).',
+      tagline:'L\'agent des devs confirmés : <strong>rapide, solide en scripts et en missions terminal</strong>, avec un quota gratuit réel et un coût par mission maîtrisé.',
+      pourquoi:'Idéal pour automatiser des tâches répétitives et générer des outils internes : il comprend les commandes, les tests et les scripts, sans surcoût quand le budget est serré.',
+      pilotage:'Cadrez chaque mission avec un prompt structuré (rôle, objectif, contraintes, livrables), imposez les tests dans la définition de fini, et fixez un budget tokens avant de lancer.'
+    },
+    opencode: {
+      nom:'OpenCode', runner:'Aussi pertinent : Codex CLI (si vous acceptez un service tiers).',
+      tagline:'Le choix <strong>100 % open source et local</strong> : vos fichiers ne quittent pas votre machine. Parfait pour le code sensible et les budgets à zéro.',
+      pourquoi:'Souveraineté totale : il tourne avec votre propre clé, sur votre machine, sans envoi à un service tiers. Idéal pour les projets confidentiels et les one-shots d\'exploration.',
+      pilotage:'Même discipline que partout : mission cadrée, plan avant code, tests obligatoires. La transparence de l\'outil ne remplace pas votre revue — elle la facilite.'
+    }
+  };
+  function resultat(){
+    var scores = {claude:0, cursor:0, codex:0, opencode:0};
+    var map = {
+      web:{cursor:2, claude:1},
+      scripts:{codex:2, opencode:1},
+      legacy:{claude:2, cursor:1},
+      explo:{opencode:2, codex:1},
+      debutant:{cursor:2, claude:1},
+      confirme:{claude:1, codex:1, cursor:1},
+      expert:{opencode:2, codex:1, claude:1},
+      confid:{opencode:3, claude:1},
+      budget:{codex:2, opencode:2},
+      vitesse:{cursor:2, claude:2},
+      ide:{cursor:3},
+      cli:{codex:2, opencode:1, claude:1},
+      autonome:{claude:3}
+    };
+    Object.keys(reponses).forEach(function(k){
+      var pts = map[reponses[k]] || {};
+      Object.keys(pts).forEach(function(c){ scores[c] += pts[c]; });
+    });
+    var cle = Object.keys(scores).reduce(function(a,b){ return scores[b] > scores[a] ? b : a; });
+    var p = profils[cle];
+    document.getElementById('res-agent').textContent = p.nom;
+    document.getElementById('res-tagline').innerHTML = p.tagline;
+    document.getElementById('res-pourquoi').textContent = p.pourquoi;
+    document.getElementById('res-pilotage').textContent = p.pilotage;
+    document.getElementById('res-runner').innerHTML = p.runner;
+    document.querySelector('.card').style.display = 'none';
+    document.getElementById('resultat').classList.add('visible');
+    window.scrollTo({top: document.getElementById('resultat').offsetTop - 40, behavior:'smooth'});
+  }
+})();
+</script>
+</body>
+</html>
