@@ -475,7 +475,125 @@
   }
 }
 </script>
-</head>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style id="futur-v3">
+/* ============================================================
+   FUTUR V3 — NEON TERMINAL — agents-code
+   2026-08-20
+   Overlay design : palette futuriste, glassmorphism, animations.
+   La structure HTML, les outils, EmailJS, chatbots et prix sont
+   intégralement préservés (ce bloc ne fait que styler).
+   ============================================================ */
+:root{
+  --bg: #0A0A12;
+  --bg-soft: #12121E;
+  --ink: #E4E4F0;
+  --ink-2: #A9A9C4;
+  --dim: #7A7A96;
+  --line: rgba(150,150,190,.16);
+  --line-strong: rgba(167,139,250,.45);
+  --accent: #A78BFA;
+  --surface: rgba(255,255,255,.03);
+  --terra: #22D3EE;
+  --terra-deep: #0E8FA6;
+  --terra-line: rgba(34,211,238,.35);
+  --terra-soft: rgba(34,211,238,.12);
+  --code-bg: #0D0D18;
+  --code-ink: #E4E4F0;
+  --code-dim: #8A8AA5;
+  --code-green: #4ADE80;
+  --code-terra: #22D3EE;
+  --sans: 'IBM Plex Mono',monospace;
+  --mono: 'IBM Plex Mono',monospace;
+  --serif: 'Syne',sans-serif;
+  --maxw: 1180px;
+  --grad-cta: linear-gradient(135deg,#A78BFA,#22D3EE);
+}
+html{scroll-behavior:smooth}
+body{
+  background-color:#0A0A12 !important;
+  background-image:radial-gradient(rgba(255,255,255,.04) 1px,transparent 1px) !important;
+  background-size:34px 34px !important;
+  color:#E4E4F0 !important;
+  font-family:'IBM Plex Mono',monospace !important;
+}
+h1,h2,h3,h4,h5,h6{
+  font-family:'Syne',sans-serif !important;
+  letter-spacing:-.015em;
+  color:#E4E4F0 !important;
+}
+p,li,td,label{color:#A9A9C4}
+a{transition:color .3s ease}
+::selection{background:#A78BFA40;color:#E4E4F0}
+::-webkit-scrollbar{width:10px}
+::-webkit-scrollbar-track{background:#0A0A12}
+::-webkit-scrollbar-thumb{background:linear-gradient(180deg,#A78BFA,#4ADE80);border-radius:8px;border:2px solid #0A0A12}
+
+@keyframes f3float{0%,100%{transform:translate(0,0) scale(1)}33%{transform:translate(4vmax,-3vmax) scale(1.07)}66%{transform:translate(-3vmax,3vmax) scale(.96)}}
+@keyframes f3shimmer{0%{background-position:0% 50%}100%{background-position:200% 50%}}
+@keyframes f3pulse{0%,100%{box-shadow:0 0 0 0 rgba(167,139,250,.4)}50%{box-shadow:0 0 0 14px transparent}}
+@keyframes f3gradmove{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
+@keyframes f3floaty{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+
+.kicker,.mod-tag,.o-price{
+  background:linear-gradient(90deg,#A78BFA,#22D3EE,#4ADE80);
+  background-size:200% auto;
+  -webkit-background-clip:text;background-clip:text;
+  color:transparent !important;
+  animation:f3shimmer 7s linear infinite;
+}
+.offer,.who-card,.form-card,.code-panel,.ps-col,.faq-wrap,.featured,.stat,.mod-row{
+  background:rgba(18,18,30,.6) !important;
+  backdrop-filter:blur(16px) saturate(140%);
+  -webkit-backdrop-filter:blur(16px) saturate(140%);
+  border:1px solid rgba(167,139,250,.18) !important;
+  border-radius:18px;
+  box-shadow:0 8px 32px rgba(0,0,0,.35), inset 0 1px 0 rgba(255,255,255,.06);
+  transition:transform .35s ease, box-shadow .35s ease, border-color .35s ease;
+}
+.offer,.who-card,.form-card,.code-panel,.ps-col,.faq-wrap,.featured,.stat,.mod-row:hover{
+  transform:translateY(-4px);
+  border-color:#A78BFA66 !important;
+  box-shadow:0 12px 42px rgba(167,139,250,.4);
+}
+.nav,nav,header{
+  background:rgba(18,18,30,.6) !important;
+  backdrop-filter:blur(18px) saturate(150%);
+  -webkit-backdrop-filter:blur(18px) saturate(150%);
+  border-bottom:1px solid rgba(167,139,250,.18);
+}
+.hero{
+  background:
+    radial-gradient(900px 420px at 12% -10%, rgba(167,139,250,.16), transparent 60%), radial-gradient(760px 460px at 88% 12%, rgba(34,211,238,.12), transparent 62%), linear-gradient(165deg,#10101C 0%,#0A0A12 60%,#0C0A16 100%) !important;
+}
+.btn{letter-spacing:.02em;font-weight:600;transition:all .3s ease;border-radius:12px}
+.btn:hover{transform:translateY(-2px)}
+.btn-primary{
+  background:linear-gradient(135deg,#A78BFA,#22D3EE,#4ADE80) !important;
+  background-size:200% 200%;
+  animation:f3gradmove 6s ease infinite;
+  box-shadow:0 6px 24px rgba(167,139,250,.4);
+  border:none !important;
+  color:#FFFFFF !important;
+}
+.btn-primary:hover{box-shadow:0 10px 36px rgba(167,139,250,.4);transform:translateY(-3px)}
+.btn-ghost{
+  background:rgba(255,255,255,.05) !important;
+  border:1px solid rgba(167,139,250,.18) !important;
+  color:#E4E4F0 !important;
+  backdrop-filter:blur(10px);
+  -webkit-backdrop-filter:blur(10px);
+}
+.btn-ghost:hover{border-color:#A78BFA88 !important;box-shadow:0 6px 22px rgba(167,139,250,.4)}
+.kicker{text-transform:uppercase;letter-spacing:.16em;font-weight:700}
+.terminal{animation:f3floaty 6s ease-in-out infinite}
+.f3-reveal{opacity:0;transform:translateY(26px);transition:opacity .8s cubic-bezier(.22,.61,.36,1),transform .8s cubic-bezier(.22,.61,.36,1)}
+.f3-reveal.f3-in{opacity:1;transform:translateY(0)}
+#f3-progress{position:fixed;top:0;left:0;height:3px;z-index:9999;background:linear-gradient(90deg,#A78BFA,#22D3EE,#4ADE80);width:0;box-shadow:0 0 12px rgba(167,139,250,.4);border-radius:0 3px 3px 0}
+
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+</style></head>
 <body>
 
 <header>
@@ -1033,5 +1151,26 @@ ce qui n'a pas été fait, les risques restants. Ne pas écrire de code hors mis
 </script>
 <script src="chatbot-config.js"></script>
 <script src="chatbot.js"></script>
-</body>
+<script id="f3-script">
+(function(){
+  if(document.getElementById('f3-progress'))return;
+  var p=document.createElement('div');p.id='f3-progress';document.body.appendChild(p);
+  var o=document.createElement('div');
+  o.style.cssText='position:fixed;inset:0;z-index:-1;pointer-events:none;overflow:hidden';
+  var orbs=["rgba(167,139,250,.24)","rgba(34,211,238,.18)","rgba(74,222,128,.12)"];
+  var pos=[['-15vmax','-15vmax','55vmax','55vmax','18s','normal'],['-12vmax','30%','45vmax','45vmax','24s','reverse'],['30%','-18vmax','40vmax','40vmax','21s','normal']];
+  for(var i=0;i<3;i++){var d=document.createElement('div');d.style.cssText='position:absolute;border-radius:50%;filter:blur(90px);opacity:.5;animation:f3float '+pos[i][4]+' ease-in-out infinite '+pos[i][5];
+    d.style.left=pos[i][0];d.style.top=pos[i][1];d.style.width=pos[i][2];d.style.height=pos[i][3];
+    d.style.background='radial-gradient(circle,'+orbs[i]+',transparent 60%)';o.appendChild(d);}
+  document.body.appendChild(o);
+  addEventListener('scroll',function(){var h=document.documentElement;var sc=(h.scrollTop||document.body.scrollTop);var m=h.scrollHeight-h.clientHeight;p.style.width=(m>0?(sc/m*100):0)+'%';},{passive:true});
+  var sel=null;
+  if(!sel)return;
+  var els=document.querySelectorAll(sel);
+  if(!('IntersectionObserver' in window)){for(var i=0;i<els.length;i++)els[i].classList.add('f3-in');return;}
+  for(var i=0;i<els.length;i++)els[i].classList.add('f3-reveal');
+  var io=new IntersectionObserver(function(es){es.forEach(function(en){if(en.isIntersecting){en.target.classList.add('f3-in');io.unobserve(en.target);}});},{threshold:.1});
+  for(var i=0;i<els.length;i++)io.observe(els[i]);
+})();
+</script></body>
 </html>
