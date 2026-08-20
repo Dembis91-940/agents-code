@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Pilotez vos agents de code — Formation 2026 pour devs, alternants et solopreneurs</title>
+<title>Pilotez vos agents de code — Formation 2026 pour devs & solopreneurs</title>
 <meta name="description" content="En 2 h, déléguez une mission complète à un agent de code sans perdre le contrôle. 6 modules, 5 templates de prompts, méthode de pilotage pas à pas. Formation PDF 27 €, pack complet 47 €, pack mentor 97 €.">
 <meta property="og:title" content="Pilotez vos agents de code — la formation">
 <meta property="og:description" content="Vos agents de code écrivent. Vous les pilotez ? En 2 h, apprenez à déléguer une mission complète sans perdre le contrôle.">
@@ -593,7 +593,8 @@ a{transition:color .3s ease}
 
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 
-</style></head>
+</style><meta name="twitter:card" content="summary_large_image">
+</head>
 <body>
 
 <header>
@@ -1164,12 +1165,12 @@ ce qui n'a pas été fait, les risques restants. Ne pas écrire de code hors mis
     d.style.background='radial-gradient(circle,'+orbs[i]+',transparent 60%)';o.appendChild(d);}
   document.body.appendChild(o);
   addEventListener('scroll',function(){var h=document.documentElement;var sc=(h.scrollTop||document.body.scrollTop);var m=h.scrollHeight-h.clientHeight;p.style.width=(m>0?(sc/m*100):0)+'%';},{passive:true});
-  var sel=null;
+  var sel=".hero,.stats-grid,.ps-grid,.mod-row";
   if(!sel)return;
   var els=document.querySelectorAll(sel);
   if(!('IntersectionObserver' in window)){for(var i=0;i<els.length;i++)els[i].classList.add('f3-in');return;}
   for(var i=0;i<els.length;i++)els[i].classList.add('f3-reveal');
-  var io=new IntersectionObserver(function(es){es.forEach(function(en){if(en.isIntersecting){en.target.classList.add('f3-in');io.unobserve(en.target);}});},{threshold:.1});
+  var io=new IntersectionObserver(function(es){es.forEach(function(en){if(en.isIntersecting||en.target.getBoundingClientRect().top<innerHeight){en.target.classList.add('f3-in');io.unobserve(en.target);}});},{threshold:.1});
   for(var i=0;i<els.length;i++)io.observe(els[i]);
 })();
 </script></body>
